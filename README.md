@@ -1,4 +1,4 @@
-# Call Tracking on ASP.NET MVC
+# Call Tracking on Java Servlets
 
 [![Build Status](https://travis-ci.org/TwilioDevEd/call-tracking-servlets)](https://travis-ci.org/TwilioDevEd/call-tracking-servlets)
 
@@ -28,7 +28,5 @@ https://www.twilio.com/help/faq/twilio-client/how-do-i-create-a-twiml-app
 This project was built using Java Servlets.
 
 1. Stay tuned for upcoming updates
-
-  ![Call Tracking Setup](http://howtodocs.s3.amazonaws.com/call-tracking-setup.gif)
 
    That's it!
