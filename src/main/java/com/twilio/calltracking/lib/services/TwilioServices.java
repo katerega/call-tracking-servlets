@@ -32,16 +32,6 @@ public class TwilioServices {
         this.client = client;
     }
 
-    public List<AvailablePhoneNumber> SearchPhoneNumbers()
-    {
-        Map<String, String> searchParams = new HashMap<>();
-        searchParams.put("AreaCode", "451");
-
-        AvailablePhoneNumberList phoneNumbers;
-        phoneNumbers = getAccount().getAvailablePhoneNumbers(searchParams, "US", "Local");
-        return phoneNumbers.getPageData();
-    }
-
     public List<AvailablePhoneNumber> SearchPhoneNumbers(String areaCode)
     {
         Map<String, String> searchParams = new HashMap<>();
