@@ -32,7 +32,7 @@ public class TwilioServices {
         this.client = client;
     }
 
-    public List<AvailablePhoneNumber> SearchPhoneNumbers(String areaCode)
+    public List<AvailablePhoneNumber> searchPhoneNumbers(String areaCode)
     {
         Map<String, String> searchParams = new HashMap<>();
         searchParams.put("AreaCode", areaCode);
@@ -42,7 +42,7 @@ public class TwilioServices {
         return phoneNumbers.getPageData();
     }
 
-    public IncomingPhoneNumber PurchasePhoneNumber(String phoneNumber, String applicationSid)
+    public IncomingPhoneNumber purchasePhoneNumber(String phoneNumber, String applicationSid)
     {
         try {
             Map<String, String> buyParams = new HashMap<>();
@@ -58,7 +58,7 @@ public class TwilioServices {
         return null;
     }
 
-    public String GetApplicationSid() throws TwilioRestException {
+    public String getApplicationSid() throws TwilioRestException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("FriendlyName", TwilioServices.DefaultAppName);
         Application app = getAccount().getApplications(params).getPageData().get(0);
