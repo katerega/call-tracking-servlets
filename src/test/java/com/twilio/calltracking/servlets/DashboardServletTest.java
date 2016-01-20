@@ -1,8 +1,9 @@
-package com.twilio.calltracking.servlet.phonenumbers;
+package com.twilio.calltracking.servlets;
 
-import com.twilio.calltracking.lib.services.TwilioServices;
+import com.twilio.calltracking.models.LeadSource;
+import com.twilio.calltracking.repositories.LeadSourceRepository;
+import com.twilio.calltracking.servlets.phonenumbers.AvailableServlet;
 import com.twilio.sdk.resource.instance.AvailablePhoneNumber;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,17 +12,15 @@ import org.mockito.MockitoAnnotations;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class AvailableServletTest {
+public class DashboardServletTest {
 
     @Mock
     HttpServletRequest request;
@@ -33,7 +32,7 @@ public class AvailableServletTest {
     RequestDispatcher requestDispatcher;
 
     @Mock
-    TwilioServices twilioServices;
+    LeadSourceRepository leadSourceRepository;
 
     @Before
     public void setUp() throws IOException {
@@ -45,16 +44,15 @@ public class AvailableServletTest {
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
-        List<AvailablePhoneNumber> phoneNumbers = new ArrayList<>();
-        when(twilioServices.searchPhoneNumbers(anyString())).thenReturn(phoneNumbers);
+        List<LeadSource> leadSources = new ArrayList<>();
+        when(leadSourceRepository.findAll()).thenReturn(leadSources);
 
-        AvailableServlet servlet = new AvailableServlet(twilioServices);
+        DashboardServlet servlet = new DashboardServlet(leadSourceRepository);
         servlet.doGet(request, response);
 
-        verify(request).getRequestDispatcher("/available_phone_numbers.jsp");
-        verify(request).setAttribute("phoneNumbers", phoneNumbers);
+        verify(request).getRequestDispatcher("/dashboard.jsp");
+        verify(request).setAttribute("leadSources", leadSources);
     }
-
 
 
 }

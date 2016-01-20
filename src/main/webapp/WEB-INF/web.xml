@@ -21,7 +21,12 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>available-phone-numbers</servlet-name>
-        <servlet-class>com.twilio.calltracking.servlet.phonenumbers.AvailableServlet</servlet-class>
+        <servlet-class>com.twilio.calltracking.servlets.phonenumbers.AvailableServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.DashboardServlet</servlet-class>
     </servlet>
 
 
@@ -30,5 +35,11 @@
         <url-pattern>/</url-pattern>
         <url-pattern>/phone-numbers</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

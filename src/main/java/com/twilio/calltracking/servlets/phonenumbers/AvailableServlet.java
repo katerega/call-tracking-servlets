@@ -1,7 +1,7 @@
-package com.twilio.calltracking.servlet.phonenumbers;
+package com.twilio.calltracking.servlets.phonenumbers;
 
 import com.twilio.calltracking.lib.services.TwilioServices;
-import com.twilio.calltracking.servlet.WebAppServlet;
+import com.twilio.calltracking.servlets.WebAppServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

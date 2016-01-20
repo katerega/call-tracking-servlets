@@ -24,6 +24,9 @@ public class Lead {
     @JoinColumn(name = "lead_source_id")
     private LeadSource leadSource;
 
+    public Lead() {
+    }
+
     public Lead(String phoneNumber, String city, String state, LeadSource leadSource) {
         this.phoneNumber = phoneNumber;
         this.city = city;

@@ -22,10 +22,10 @@ public class LeadSource {
     @Column(name = "incoming_number_international")
     private String incomingNumberInternational;
 
-    @Column(name = "forwarding_number")
+    @JoinColumn(name = "forwarding_number")
     private LeadSource forwardingNumber;
 
-    @OneToMany(mappedBy = "agent")
+    @OneToMany(mappedBy = "leadSource")
     private List<Lead> leads;
 
     public LeadSource() {
