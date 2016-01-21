@@ -23,7 +23,7 @@ public class LeadSource {
     private String incomingNumberInternational;
 
     @JoinColumn(name = "forwarding_number")
-    private LeadSource forwardingNumber;
+    private String forwardingNumber;
 
     @OneToMany(mappedBy = "leadSource")
     private List<Lead> leads;
@@ -32,7 +32,7 @@ public class LeadSource {
         this.leads = new ArrayList<>();
     }
 
-    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational, LeadSource forwardingNumber) {
+    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational, String forwardingNumber) {
         this();
         this.name = name;
         this.incomingNumberNational = incomingNumberNational;
@@ -72,11 +72,11 @@ public class LeadSource {
         this.incomingNumberInternational = incomingNumberInternational;
     }
 
-    public LeadSource getForwardingNumber() {
+    public String getForwardingNumber() {
         return forwardingNumber;
     }
 
-    public void setForwardingNumber(LeadSource forwardingNumber) {
+    public void setForwardingNumber(String forwardingNumber) {
         this.forwardingNumber = forwardingNumber;
     }
 }
