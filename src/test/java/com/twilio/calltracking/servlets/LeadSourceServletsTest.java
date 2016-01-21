@@ -1,14 +1,13 @@
-package com.twilio.calltracking.servlets.calltracking;
+package com.twilio.calltracking.servlets;
 
 import com.twilio.calltracking.lib.services.TwilioServices;
 import com.twilio.calltracking.models.Lead;
 import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadRepository;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
-import com.twilio.calltracking.servlets.BaseTwilioServletTest;
-import org.hamcrest.CoreMatchers;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import com.twilio.calltracking.servlets.calltracking.ForwardCallServlet;
+import com.twilio.sdk.resource.instance.IncomingPhoneNumber;
+import com.twilio.calltracking.servlets.leadsources.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -22,16 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ForwardCallServletTest extends BaseTwilioServletTest {
-
+public class LeadSourceServletsTest {
     @Mock
     HttpServletRequest request;
 
@@ -45,10 +40,13 @@ public class ForwardCallServletTest extends BaseTwilioServletTest {
     TwilioServices twilioServices;
 
     @Mock
-    LeadRepository leadRepository;
+    LeadSourceRepository leadSourceRepository;
 
     @Mock
-    LeadSourceRepository leadSourceRepository;
+    IncomingPhoneNumber incomingPhoneNumber;
+
+    @Mock
+    LeadSource leadSource;
 
     @Before
     public void setUp() throws IOException {
@@ -58,26 +56,21 @@ public class ForwardCallServletTest extends BaseTwilioServletTest {
         PrintWriter printWriter = new PrintWriter(output);
         when(response.getWriter()).thenReturn(printWriter);
 
-        LeadSource leadSource = new LeadSource("test", "", "");
-        Lead lead = new Lead("+123456789", "City", "State", leadSource);
-        when(leadSourceRepository.findByIncomingNumberInternational(anyString())).thenReturn(leadSource);
-        when(leadRepository.create(Matchers.any(Lead.class))).thenReturn(lead);
+        when(incomingPhoneNumber.getFriendlyName()).thenReturn("(415) 969-9064");
+        when(incomingPhoneNumber.getPhoneNumber()).thenReturn("+14159699064");
 
-        when(request.getParameter("called")).thenReturn("+88888888");
-        when(request.getParameter("caller")).thenReturn("+99999999");
-        when(request.getParameter("fromCity")).thenReturn("City");
-        when(request.getParameter("fromState")).thenReturn("State");
+        when(twilioServices.purchasePhoneNumber(anyString(), anyString())).thenReturn(incomingPhoneNumber);
+        when(leadSourceRepository.create(Matchers.any(LeadSource.class))).thenReturn(leadSource);
 
+        when(request.getParameter("phoneNumber")).thenReturn("+1 555 555 55555");
     }
 
     @Test
-    public void postMethod_FindsTheLeadSourceAndCreatesALeadForTheGivenCalled() throws Exception {
+    public void postMethodToCreateServlet_CreatesALeadSource() throws Exception {
 
-        ForwardCallServlet servlet = new ForwardCallServlet(leadSourceRepository, leadRepository);
+        CreateServlet servlet = new CreateServlet(leadSourceRepository,twilioServices);
         servlet.doPost(request, response);
 
-        verify(leadRepository).create(Matchers.any(Lead.class));
+        verify(leadSourceRepository).create(Matchers.any(LeadSource.class));
     }
 }
-
-

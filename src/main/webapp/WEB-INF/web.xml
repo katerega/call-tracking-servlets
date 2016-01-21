@@ -29,6 +29,15 @@
         <servlet-class>com.twilio.calltracking.servlets.DashboardServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>calltracking-forwardcall</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.calltracking.ForwardCallServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>leadsources-create</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.leadsources.CreateServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>available-phone-numbers</servlet-name>
@@ -39,6 +48,16 @@
     <servlet-mapping>
         <servlet-name>dashboard</servlet-name>
         <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>calltracking-forwardcall</servlet-name>
+        <url-pattern>/forward</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>leadsources-create</servlet-name>
+        <url-pattern>/leadsources-create</url-pattern>
     </servlet-mapping>
 
 

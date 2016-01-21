@@ -32,12 +32,15 @@ public class LeadSource {
         this.leads = new ArrayList<>();
     }
 
-    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational, String forwardingNumber) {
-        this();
+    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational) {
+        this(incomingNumberNational, incomingNumberInternational);
         this.name = name;
+    }
+
+    public LeadSource(String incomingNumberNational, String incomingNumberInternational) {
+        this();
         this.incomingNumberNational = incomingNumberNational;
         this.incomingNumberInternational = incomingNumberInternational;
-        this.forwardingNumber = forwardingNumber;
     }
 
     public long getId() {

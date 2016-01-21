@@ -1,6 +1,6 @@
 CREATE TABLE lead_sources (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NULL,
   incoming_number_national      VARCHAR(50) NOT NULL,
   incoming_number_international      VARCHAR(50) NOT NULL,
   forwarding_number      VARCHAR(50) NOT NULL

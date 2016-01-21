@@ -13,4 +13,8 @@ public class Config {
     public static String getPhoneNumber() {
         return System.getenv("TWILIO_PHONE_NUMBER");
     }
+
+    public static String getTwimlApplicationSid() {
+        return System.getenv("TWILIO_APP_SID");
+    }
 }
