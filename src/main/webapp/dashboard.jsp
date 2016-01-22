@@ -21,15 +21,6 @@
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
 
-
-                @using (Html.BeginForm("Index", "AvailablePhoneNumbers", FormMethod.Get, new { @class = "form-inline", role = "form" }))
-                {
-                    <div class="form-group">
-                        <label class="sr-only control-label" for="areaCode">Area code</label>
-                        <input id="areaCode" name="areaCode" type="text" class="form-control" value="415" maxlength="3"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                }
                 <h2>Add a new number</h2>
                 <p>Create a new lead source by purchasing a new phone number. Area code is optional.</p>
 
@@ -83,7 +74,7 @@
             </div>
         </div>
     </layout:put>
-    <layout:put block="content" type="REPLACE">
+    <layout:put block="scripts" type="REPLACE">
         <script src="scripts/chart.js"></script>
         <script src="scripts/call-tracking.js"></script>
     </layout:put>

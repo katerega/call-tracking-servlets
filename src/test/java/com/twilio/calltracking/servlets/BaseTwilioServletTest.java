@@ -5,6 +5,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.StringReader;
@@ -49,6 +50,10 @@ public abstract class BaseTwilioServletTest {
 
     protected void assertThatContentTypeIsXML(HttpServletResponse response) {
         verify(response).setContentType("text/xml");
+    }
+
+    protected void verifyRedirectTo(HttpServletResponse response, String viewName) throws IOException {
+        verify(response).sendRedirect(String.format("/%s", viewName));
     }
 }
 

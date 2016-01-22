@@ -39,6 +39,11 @@
         <servlet-class>com.twilio.calltracking.servlets.leadsources.CreateServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>leadsources-edit</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.leadsources.EditServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>available-phone-numbers</servlet-name>
         <url-pattern>/</url-pattern>
@@ -58,6 +63,11 @@
     <servlet-mapping>
         <servlet-name>leadsources-create</servlet-name>
         <url-pattern>/leadsources-create</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>leadsources-edit</servlet-name>
+        <url-pattern>/leadsources-edit</url-pattern>
     </servlet-mapping>
 
 

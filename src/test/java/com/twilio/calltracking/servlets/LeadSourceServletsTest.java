@@ -22,11 +22,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class LeadSourceServletsTest {
+public class LeadSourceServletsTest extends BaseTwilioServletTest{
     @Mock
     HttpServletRequest request;
 
@@ -55,22 +56,66 @@ public class LeadSourceServletsTest {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintWriter printWriter = new PrintWriter(output);
         when(response.getWriter()).thenReturn(printWriter);
+        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
         when(incomingPhoneNumber.getFriendlyName()).thenReturn("(415) 969-9064");
         when(incomingPhoneNumber.getPhoneNumber()).thenReturn("+14159699064");
 
         when(twilioServices.purchasePhoneNumber(anyString(), anyString())).thenReturn(incomingPhoneNumber);
+        when(leadSourceRepository.find(anyLong())).thenReturn(leadSource);
         when(leadSourceRepository.create(Matchers.any(LeadSource.class))).thenReturn(leadSource);
-
-        when(request.getParameter("phoneNumber")).thenReturn("+1 555 555 55555");
+        when(leadSourceRepository.update(Matchers.any(LeadSource.class))).thenReturn(leadSource);
     }
 
     @Test
     public void postMethodToCreateServlet_CreatesALeadSource() throws Exception {
 
+        when(request.getParameter("phoneNumber")).thenReturn("+14159699064");
+
         CreateServlet servlet = new CreateServlet(leadSourceRepository,twilioServices);
         servlet.doPost(request, response);
 
         verify(leadSourceRepository).create(Matchers.any(LeadSource.class));
+    }
+
+    @Test
+    public void postMethodToCreateServlet_RedirectsToEditViewOnSuccess() throws Exception {
+
+        when(request.getParameter("phoneNumber")).thenReturn("+14159699064");
+
+        CreateServlet servlet = new CreateServlet(leadSourceRepository,twilioServices);
+        servlet.doPost(request, response);
+
+        verifyRedirectTo(response, "leadsource-edit");
+    }
+
+    @Test
+    public void postMethodToEditServlet_EditsALeadSource() throws Exception {
+
+        when(request.getParameter("id")).thenReturn("1");
+        when(request.getParameter("name")).thenReturn("Name");
+        when(request.getParameter("incomingNumberNational")).thenReturn("4159699064");
+        when(request.getParameter("incomingNumberInternational")).thenReturn("+14159699064");
+        when(request.getParameter("forwardingNumber")).thenReturn("+5567788000");
+
+        EditServlet servlet = new EditServlet(leadSourceRepository);
+        servlet.doPost(request, response);
+
+        verify(leadSourceRepository).update(Matchers.any(LeadSource.class));
+    }
+
+    @Test
+    public void postMethodToEditServlet_RedirectsToDashboardOnSuccess() throws Exception {
+
+        when(request.getParameter("id")).thenReturn("1");
+        when(request.getParameter("name")).thenReturn("Name");
+        when(request.getParameter("incomingNumberNational")).thenReturn("4159699064");
+        when(request.getParameter("incomingNumberInternational")).thenReturn("+14159699064");
+        when(request.getParameter("forwardingNumber")).thenReturn("+5567788000");
+
+        EditServlet servlet = new EditServlet(leadSourceRepository);
+        servlet.doPost(request, response);
+
+        verifyRedirectTo(response, "dashboard");
     }
 }
