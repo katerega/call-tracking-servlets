@@ -3,6 +3,8 @@ package com.twilio.calltracking.servlets;
 import com.twilio.calltracking.lib.utilities.Lazy;
 import com.twilio.calltracking.lib.web.request.validators.RequestParametersValidator;
 import com.twilio.sdk.verbs.TwiMLResponse;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +24,14 @@ public class WebAppServlet extends HttpServlet {
     protected void respondTwiML(HttpServletResponse response, TwiMLResponse twiMLResponse) throws IOException {
         response.setContentType("text/xml");
         response.getWriter().write(twiMLResponse.toXML());
+    }
+
+    protected void respondJson(HttpServletResponse response, Object object) throws IOException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(object);
+
+        response.setContentType("application/json");
+        response.getWriter().write(json);
     }
 
     protected void respondContent(HttpServletResponse response, String content) throws IOException {

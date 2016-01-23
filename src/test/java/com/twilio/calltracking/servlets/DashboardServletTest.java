@@ -2,8 +2,6 @@ package com.twilio.calltracking.servlets;
 
 import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
-import com.twilio.calltracking.servlets.phonenumbers.AvailableServlet;
-import com.twilio.sdk.resource.instance.AvailablePhoneNumber;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

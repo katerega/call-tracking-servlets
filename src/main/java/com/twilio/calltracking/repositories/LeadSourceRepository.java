@@ -1,8 +1,10 @@
 package com.twilio.calltracking.repositories;
 
 import com.twilio.calltracking.models.LeadSource;
+import javafx.beans.binding.ObjectExpression;
 
 import javax.persistence.NoResultException;
+import java.util.*;
 
 public class LeadSourceRepository extends Repository<LeadSource> {
 
@@ -24,5 +26,31 @@ public class LeadSourceRepository extends Repository<LeadSource> {
         }
 
         return leadSource;
+    }
+
+    public List<Object> findLeadsByLeadSource() {
+
+        List<Object[]> items = null;
+        try {
+            items = getEm().createQuery("SELECT s.name as Source, COUNT(l) as Quantity FROM LeadSource s JOIN s.leads l GROUP BY s.name")
+                            .getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return QueryHelper.mapResults(items);
+    }
+
+    public List<Object> findLeadsByCity() {
+
+        List<Object[]> items = null;
+        try {
+            items = getEm().createQuery("SELECT l.city, COUNT(l) FROM LeadSource s JOIN s.leads l GROUP BY l.city")
+                            .getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return QueryHelper.mapResults(items);
     }
 }

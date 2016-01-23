@@ -44,6 +44,16 @@
         <servlet-class>com.twilio.calltracking.servlets.leadsources.EditServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>stats-leads-city</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.stats.LeadsByCityServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>stats-leads-source</servlet-name>
+        <servlet-class>com.twilio.calltracking.servlets.stats.LeadsBySourceServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>available-phone-numbers</servlet-name>
         <url-pattern>/</url-pattern>
@@ -70,5 +80,14 @@
         <url-pattern>/leadsources-edit</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>stats-leads-city</servlet-name>
+        <url-pattern>/stats/city</url-pattern>
+    </servlet-mapping>
 
+
+    <servlet-mapping>
+        <servlet-name>stats-leads-source</servlet-name>
+        <url-pattern>/stats/source</url-pattern>
+    </servlet-mapping>
 </web-app>
