@@ -15,22 +15,20 @@
           integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg=="
           crossorigin="anonymous">
 
-    <link href="css/site.css" rel="stylesheet"/>
-
-    <link rel="stylesheet" media="all"
+    <link href="/css/site.css" rel="stylesheet"/>
 </head>
 <body>
 
 <!-- Nav Bar -->
 <div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/dashboard" class="navbar-brand">Call Trackin</a>
+            <a href="/dashboard" class="navbar-brand">Call Tracking</a>
         </div>
     </div>
 </div>

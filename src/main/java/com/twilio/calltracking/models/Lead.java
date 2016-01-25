@@ -2,27 +2,17 @@ package com.twilio.calltracking.models;
 
 import javax.persistence.*;
 
-@SuppressWarnings("unused")
-@Entity
-@Table(name = "leads")
-public class Lead {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+@SuppressWarnings("unused") @Entity @Table(name = "leads") public class Lead {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id") private long id;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone_number") private String phoneNumber;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "city") private String city;
 
-    @Column(name = "state")
-    private String state;
+    @Column(name = "state") private String state;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lead_source_id")
-    private LeadSource leadSource;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "lead_source_id") private LeadSource
+        leadSource;
 
     public Lead() {
     }

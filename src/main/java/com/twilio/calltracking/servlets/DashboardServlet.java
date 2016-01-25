@@ -21,7 +21,7 @@ public class DashboardServlet extends WebAppServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
         request.setAttribute("leadSources", leadSourceRepository.findAll());
         request.getRequestDispatcher("/dashboard.jsp").forward(request, response);

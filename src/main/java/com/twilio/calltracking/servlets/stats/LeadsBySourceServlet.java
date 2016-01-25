@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class LeadsBySourceServlet extends WebAppServlet{
+public class LeadsBySourceServlet extends WebAppServlet {
     private LeadSourceRepository leadSourceRepository;
 
     public LeadsBySourceServlet() {
@@ -20,8 +20,7 @@ public class LeadsBySourceServlet extends WebAppServlet{
         this.leadSourceRepository = leadSourceRepository;
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         List<Object> leadsByLeadSource = leadSourceRepository.findLeadsByLeadSource();
         respondJson(response, leadsByLeadSource);

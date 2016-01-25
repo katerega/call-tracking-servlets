@@ -5,7 +5,7 @@
 <layout:extends name="base">
     <layout:put block="content" type="REPLACE">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-offset-3 col-md-6">
                 <div class="page-header">
                     <h1>Purchase a new phone number</h1>
                 </div>
@@ -25,7 +25,7 @@
                          <tr>
                             <td>${number.friendlyName}</td>
                             <td>
-                                <form action="/leadsource/create" method="POST" id="${number.phoneNumber}" style="display:none;">
+                                <form action="/leadsources/create" method="POST" id="${number.phoneNumber}" style="display:none;">
                                     <input type="hidden" name="phoneNumber" value="${number.phoneNumber}">
                                 </form>
                                 <a href="javascript:document.getElementById('${number.phoneNumber}').submit()" class="btn btn-primary btn-xs" id="createLink">Purchase</a></li>

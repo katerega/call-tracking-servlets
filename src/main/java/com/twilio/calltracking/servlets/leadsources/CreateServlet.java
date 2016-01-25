@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CreateServlet extends WebAppServlet {
@@ -34,19 +35,19 @@ public class CreateServlet extends WebAppServlet {
         String phoneNumber = request.getParameter("phoneNumber");
 
         String twimlApplicationSid = Config.getTwimlApplicationSid();
-        if (twimlApplicationSid == "" || twimlApplicationSid == null)
+        if (Objects.equals(twimlApplicationSid, "") || (twimlApplicationSid == null)) {
             try {
                 twimlApplicationSid = twilioServices.getApplicationSid();
             } catch (TwilioRestException e) {
                 e.printStackTrace();
             }
+        }
 
         IncomingPhoneNumber twilioNumber = twilioServices.purchasePhoneNumber(phoneNumber,twimlApplicationSid);
 
         LeadSource leadSource = new LeadSource(twilioNumber.getFriendlyName(), twilioNumber.getPhoneNumber());
         leadSource = leadSourceRepository.create(leadSource);
-        request.setAttribute("id",leadSource.getId());
 
-        response.sendRedirect("/leadsource-edit");
+        response.sendRedirect(String.format("/leadsources/edit?id=%s", leadSource.getId()));
     }
 }

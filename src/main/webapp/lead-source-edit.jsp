@@ -10,7 +10,7 @@
                 <h1>Edit lead source for ${leadSource.incomingNumberNational}</h1>
             </div>
             <div class="col-md-9">
-                <form action="/leadsources-edit" class="form-horizontal" method="GET" role="form">
+                <form action="/leadsources/edit" class="form-horizontal" method="POST" role="form">
                     <div class="form-group">
                         <input type="hidden" id="id" name="id" type="text" value="${leadSource.id}"/>
                         <input type="hidden" id="incomingNumberNational" name="incomingNumberNational" type="text" value="${leadSource.incomingNumberNational}"/>

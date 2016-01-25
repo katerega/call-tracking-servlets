@@ -16,11 +16,9 @@ public class LeadSourceRepository extends Repository<LeadSource> {
 
         LeadSource leadSource = null;
         try {
-            leadSource = (LeadSource)
-                    getEm().createQuery("SELECT e FROM LeadSource e WHERE e.incomingNumberInternational = :number")
-                            .setMaxResults(1)
-                            .setParameter("number", number)
-                            .getSingleResult();
+            leadSource = (LeadSource) getEm().createQuery(
+                "SELECT e FROM LeadSource e WHERE e.incomingNumberInternational = :number")
+                .setMaxResults(1).setParameter("number", number).getSingleResult();
         } catch (NoResultException ex) {
             System.out.println(ex.getMessage());
         }
@@ -30,10 +28,11 @@ public class LeadSourceRepository extends Repository<LeadSource> {
 
     public List<Object> findLeadsByLeadSource() {
 
-        List<Object[]> items = null;
+        List items = null;
         try {
-            items = getEm().createQuery("SELECT s.name as Source, COUNT(l) as Quantity FROM LeadSource s JOIN s.leads l GROUP BY s.name")
-                            .getResultList();
+            items = getEm().createQuery(
+                "SELECT s.name as Source, COUNT(l) as Quantity FROM LeadSource s JOIN s.leads l GROUP BY s.name")
+                .getResultList();
         } catch (NoResultException ex) {
             System.out.println(ex.getMessage());
         }
@@ -43,10 +42,11 @@ public class LeadSourceRepository extends Repository<LeadSource> {
 
     public List<Object> findLeadsByCity() {
 
-        List<Object[]> items = null;
+        List items = null;
         try {
-            items = getEm().createQuery("SELECT l.city, COUNT(l) FROM LeadSource s JOIN s.leads l GROUP BY l.city")
-                            .getResultList();
+            items = getEm().createQuery(
+                "SELECT l.city, COUNT(l) FROM LeadSource s JOIN s.leads l GROUP BY l.city")
+                .getResultList();
         } catch (NoResultException ex) {
             System.out.println(ex.getMessage());
         }

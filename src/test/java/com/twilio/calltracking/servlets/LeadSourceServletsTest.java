@@ -1,11 +1,8 @@
 package com.twilio.calltracking.servlets;
 
 import com.twilio.calltracking.lib.services.TwilioServices;
-import com.twilio.calltracking.models.Lead;
 import com.twilio.calltracking.models.LeadSource;
-import com.twilio.calltracking.repositories.LeadRepository;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
-import com.twilio.calltracking.servlets.calltracking.ForwardCallServlet;
 import com.twilio.sdk.resource.instance.IncomingPhoneNumber;
 import com.twilio.calltracking.servlets.leadsources.*;
 import org.junit.Before;
@@ -21,7 +18,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -86,7 +82,7 @@ public class LeadSourceServletsTest extends BaseTwilioServletTest{
         CreateServlet servlet = new CreateServlet(leadSourceRepository,twilioServices);
         servlet.doPost(request, response);
 
-        verifyRedirectTo(response, "leadsource-edit");
+        verifyRedirectTo(response, "leadsources/edit?id=0");
     }
 
     @Test

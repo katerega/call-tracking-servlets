@@ -21,25 +21,19 @@ import static org.mockito.Mockito.when;
 
 public class AvailableServletTest {
 
-    @Mock
-    HttpServletRequest request;
+    @Mock HttpServletRequest request;
 
-    @Mock
-    HttpServletResponse response;
+    @Mock HttpServletResponse response;
 
-    @Mock
-    RequestDispatcher requestDispatcher;
+    @Mock RequestDispatcher requestDispatcher;
 
-    @Mock
-    TwilioServices twilioServices;
+    @Mock TwilioServices twilioServices;
 
-    @Before
-    public void setUp() throws IOException {
+    @Before public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void getMethod_ReturnsListOfPhoneNumbers() throws Exception {
+    @Test public void getMethod_ReturnsListOfPhoneNumbers() throws Exception {
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 

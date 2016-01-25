@@ -26,14 +26,11 @@ public abstract class BaseTwilioServletTest {
             case 1:
                 return document.getRootElement().getChild(pathComponents[0]);
             case 2:
-                return document.getRootElement()
-                        .getChild(pathComponents[0])
-                        .getChild(pathComponents[1]);
+                return document.getRootElement().getChild(pathComponents[0])
+                    .getChild(pathComponents[1]);
             case 3:
-                return document.getRootElement()
-                        .getChild(pathComponents[0])
-                        .getChild(pathComponents[1])
-                        .getChild(pathComponents[2]);
+                return document.getRootElement().getChild(pathComponents[0])
+                    .getChild(pathComponents[1]).getChild(pathComponents[2]);
             default:
                 return null;
         }
@@ -52,7 +49,8 @@ public abstract class BaseTwilioServletTest {
         verify(response).setContentType("text/xml");
     }
 
-    protected void verifyRedirectTo(HttpServletResponse response, String viewName) throws IOException {
+    protected void verifyRedirectTo(HttpServletResponse response, String viewName)
+        throws IOException {
         verify(response).sendRedirect(String.format("/%s", viewName));
     }
 }

@@ -22,7 +22,7 @@ public class LeadSource {
     @Column(name = "incoming_number_international")
     private String incomingNumberInternational;
 
-    @JoinColumn(name = "forwarding_number")
+    @Column(name = "forwarding_number")
     private String forwardingNumber;
 
     @OneToMany(mappedBy = "leadSource")

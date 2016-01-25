@@ -14,16 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ForwardCallServlet extends WebAppServlet {
+public class LeadCallServlet extends WebAppServlet {
 
     private LeadSourceRepository leadSourceRepository;
     private LeadRepository leadRepository;
 
-    public ForwardCallServlet() {
+    public LeadCallServlet() {
         this(new LeadSourceRepository(), new LeadRepository());
     }
 
-    public ForwardCallServlet(LeadSourceRepository leadSourceRepository, LeadRepository leadRepository) {
+    public LeadCallServlet(LeadSourceRepository leadSourceRepository,
+        LeadRepository leadRepository) {
         this.leadSourceRepository = leadSourceRepository;
         this.leadRepository = leadRepository;
     }
@@ -31,10 +32,10 @@ public class ForwardCallServlet extends WebAppServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String called = request.getParameter("called");
-        String caller = request.getParameter("caller");
-        String city = request.getParameter("fromCity");
-        String state = request.getParameter("fromState");
+        String called = request.getParameter("Called");
+        String caller = request.getParameter("Caller");
+        String city = request.getParameter("FromCity");
+        String state = request.getParameter("FromState");
 
         LeadSource ls = leadSourceRepository.findByIncomingNumberInternational(called);
         leadRepository.create(new Lead(caller,  city, state, ls));

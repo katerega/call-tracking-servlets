@@ -1,9 +1,11 @@
 $(document).ready(function () {
-    $.get("/statistics/leadsbysource/", function (data) {
+    $.get("/stats/source", function (data) {
+        console.log(data);
         CallTrackingGraph("#leads-by-source", data).draw();
     });
 
-    $.get("/statistics/leadsbycity/", function (data) {
+    $.get("/stats/city", function (data) {
+        console.log(data);
         CallTrackingGraph("#leads-by-city", data).draw();
     });
 });

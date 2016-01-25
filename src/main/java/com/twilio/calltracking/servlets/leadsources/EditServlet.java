@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class EditServlet extends WebAppServlet {
 
@@ -32,7 +33,7 @@ public class EditServlet extends WebAppServlet {
 
         String id = request.getParameter("id");
 
-        if (id == null){
+        if (id == null || Objects.equals(id, "")) {
             response.sendError(400, "Missed resource params." );
         } else{
             LeadSource leadSource = leadSourceRepository.find(Long.valueOf(id));

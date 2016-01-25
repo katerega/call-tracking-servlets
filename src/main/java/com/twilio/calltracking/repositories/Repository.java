@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
-public abstract class Repository<T> {
+@SuppressWarnings("unused") public abstract class Repository<T> {
 
     protected final Class<T> entityType;
     protected Map<String, String> properties;
@@ -27,11 +26,10 @@ public abstract class Repository<T> {
      *
      * @return all entities
      */
-    @SuppressWarnings("unchecked")
-    public Iterable<T> findAll() {
+    @SuppressWarnings("unchecked") public Iterable<T> findAll() {
         EntityManager em = getEm();
-        Query query = em.createQuery(
-                String.format("SELECT e FROM %s e", entityType.getSimpleName()));
+        Query query =
+            em.createQuery(String.format("SELECT e FROM %s e", entityType.getSimpleName()));
 
         Iterable<T> results = query.getResultList();
         em.close();
@@ -41,8 +39,7 @@ public abstract class Repository<T> {
     /**
      * Retrieves an entity by its id.
      *
-     * @param id   The given id.
-     *
+     * @param id The given id.
      * @return the entity with the given id
      */
     public T find(long id) {
@@ -56,8 +53,7 @@ public abstract class Repository<T> {
     /**
      * Saves a given entity. Use the returned instance for further operations.
      *
-     * @param entity   The entity
-     *
+     * @param entity The entity
      * @return the saved entity
      */
     public T create(T entity) {
@@ -74,8 +70,7 @@ public abstract class Repository<T> {
     /**
      * Updates a given entity. Use the returned instance for further operations.
      *
-     * @param entity   The entity
-     *
+     * @param entity The entity
      * @return the updated entity
      */
     public T update(T entity) {
@@ -92,7 +87,7 @@ public abstract class Repository<T> {
     /**
      * Deletes the entity.
      *
-     * @param entity   The entity
+     * @param entity The entity
      */
     public void delete(T entity) {
         EntityManager em = getEm();
@@ -124,9 +119,8 @@ public abstract class Repository<T> {
         return config;
     }
 
-    protected EntityManager getEm(){
-        return Persistence
-                .createEntityManagerFactory("call-tracking-servlets", properties)
-                .createEntityManager();
+    protected EntityManager getEm() {
+        return Persistence.createEntityManagerFactory("call-tracking-servlets", properties)
+            .createEntityManager();
     }
 }

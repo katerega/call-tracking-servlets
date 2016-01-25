@@ -21,7 +21,8 @@ public class WebAppServlet extends HttpServlet {
         requestValidator = new Lazy<>(RequestParametersValidator::new);
     }
 
-    protected void respondTwiML(HttpServletResponse response, TwiMLResponse twiMLResponse) throws IOException {
+    protected void respondTwiML(HttpServletResponse response, TwiMLResponse twiMLResponse)
+        throws IOException {
         response.setContentType("text/xml");
         response.getWriter().write(twiMLResponse.toXML());
     }
@@ -39,7 +40,7 @@ public class WebAppServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         requestValidator.get().setRequest(request);
     }
 

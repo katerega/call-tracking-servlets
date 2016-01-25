@@ -22,13 +22,14 @@ public class AvailableServlet extends WebAppServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
 
         String areaCode = request.getParameter("areaCode");
 
         request.setAttribute("phoneNumbers",
-                twilioServices.searchPhoneNumbers(areaCode).stream().limit(10).collect(Collectors.toList()));
+            twilioServices.searchPhoneNumbers(areaCode).stream().limit(10)
+                .collect(Collectors.toList()));
         request.getRequestDispatcher("/available_phone_numbers.jsp").forward(request, response);
     }
 }

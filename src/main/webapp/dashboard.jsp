@@ -16,7 +16,7 @@
                 <form action="/phone-numbers" class="form-inline" method="GET" role="form">
                     <div class="form-group">
                         <label class="sr-only control-label" for="areaCode">Area code</label>
-                        <input id="areaCode" name="areaCode" type="text" class="form-control" value="415" maxlength="3"/>
+                        <input id="areaCode" name="areaCode" type="text" class="form-control" value="" maxlength="3"/>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
@@ -42,7 +42,7 @@
                                     <td>${leadSource.incomingNumberNational}</td>
                                     <td>${leadSource.forwardingNumber}</td>
                                     <td>
-                                        <a href="/leadsources/edit?id=${leadsource.id}" class="btn btn-default btn-xs">Edit</a>
+                                        <a href="/leadsources/edit?id=${leadSource.id}" class="btn btn-default btn-xs">Edit</a>
                                     </td>
                                 </tr>
                             </core:forEach>
@@ -75,7 +75,7 @@
         </div>
     </layout:put>
     <layout:put block="scripts" type="REPLACE">
-        <script src="scripts/chart.js"></script>
-        <script src="scripts/call-tracking.js"></script>
+        <script src="/scripts/chart.js"></script>
+        <script src="/scripts/call-tracking.js"></script>
     </layout:put>
 </layout:extends>

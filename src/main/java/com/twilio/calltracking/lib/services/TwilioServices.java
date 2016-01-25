@@ -18,8 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
-public class TwilioServices {
+@SuppressWarnings("unused") public class TwilioServices {
 
     private final TwilioRestClient client;
     private static final String DefaultAppName = "Call tracking app";
@@ -32,8 +31,7 @@ public class TwilioServices {
         this.client = client;
     }
 
-    public List<AvailablePhoneNumber> searchPhoneNumbers(String areaCode)
-    {
+    public List<AvailablePhoneNumber> searchPhoneNumbers(String areaCode) {
         Map<String, String> searchParams = new HashMap<>();
         searchParams.put("AreaCode", areaCode);
 
@@ -42,8 +40,7 @@ public class TwilioServices {
         return phoneNumbers.getPageData();
     }
 
-    public IncomingPhoneNumber purchasePhoneNumber(String phoneNumber, String applicationSid)
-    {
+    public IncomingPhoneNumber purchasePhoneNumber(String phoneNumber, String applicationSid) {
         try {
             Map<String, String> buyParams = new HashMap<>();
             buyParams.put("PhoneNumber", phoneNumber);
@@ -59,12 +56,12 @@ public class TwilioServices {
     }
 
     public String getApplicationSid() throws TwilioRestException {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("FriendlyName", TwilioServices.DefaultAppName);
         Application app = getAccount().getApplications(params).getPageData().get(0);
 
-        if (app != null){
-            List<NameValuePair> newAppParams = new ArrayList<NameValuePair>();
+        if (app != null) {
+            List<NameValuePair> newAppParams = new ArrayList<>();
             newAppParams.add(new BasicNameValuePair("FriendlyName", TwilioServices.DefaultAppName));
             app = getAccount().getApplicationFactory().create(newAppParams);
         }
@@ -72,17 +69,18 @@ public class TwilioServices {
         return app.getSid();
     }
 
-    private List<AvailablePhoneNumber> getAvailablePhoneNumbers(Account account, Map<String, String> searchParams) {
+    private List<AvailablePhoneNumber> getAvailablePhoneNumbers(Account account,
+        Map<String, String> searchParams) {
         AvailablePhoneNumberList phoneNumbers;
         phoneNumbers = account.getAvailablePhoneNumbers(searchParams, "US", "Local");
         return phoneNumbers.getPageData();
     }
 
-    private Account getAccount(){
+    private Account getAccount() {
         return client.getAccount();
     }
 
-    private IncomingPhoneNumberFactory getIncomingPhoneNumberFactory(){
+    private IncomingPhoneNumberFactory getIncomingPhoneNumberFactory() {
         return getAccount().getIncomingPhoneNumberFactory();
     }
 }

@@ -8,7 +8,7 @@ public class QueryHelper {
     public static List<Object> mapResults(List<Object[]> items) {
         List<Object> results = new ArrayList<>();
         // Place results in map
-        for (Object[] item: items) {
+        for (Object[] item : items) {
 
             Object tuple = new Object() {
                 public final String Label = (String) item[0];

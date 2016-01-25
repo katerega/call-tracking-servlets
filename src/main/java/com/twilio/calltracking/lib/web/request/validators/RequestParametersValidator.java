@@ -6,7 +6,7 @@ public class RequestParametersValidator {
 
     private HttpServletRequest request;
 
-    public RequestParametersValidator(){
+    public RequestParametersValidator() {
     }
 
     public RequestParametersValidator(HttpServletRequest request) {
@@ -20,12 +20,11 @@ public class RequestParametersValidator {
     public boolean validatePresence(String... parameters) {
 
         Byte invalidParams = 0;
-        for(String parameterName : parameters) {
+        for (String parameterName : parameters) {
             String parameterValue = request.getParameter(parameterName);
             if (parameterValue.isEmpty()) {
-                request.setAttribute(
-                        String.format("%sError", parameterName),
-                        String.format("%s can't be blank", capitalize(splitCamelCase(parameterName))));
+                request.setAttribute(String.format("%sError", parameterName),
+                    String.format("%s can't be blank", capitalize(splitCamelCase(parameterName))));
 
                 invalidParams++;
             }
@@ -39,13 +38,8 @@ public class RequestParametersValidator {
     }
 
     private static String splitCamelCase(String s) {
-        return s.replaceAll(
-                String.format("%s|%s|%s",
-                        "(?<=[A-Z])(?=[A-Z][a-z])",
-                        "(?<=[^A-Z])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[^A-Za-z])"
-                ),
-                " "
-        );
+        return s.replaceAll(String
+            .format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
     }
 }

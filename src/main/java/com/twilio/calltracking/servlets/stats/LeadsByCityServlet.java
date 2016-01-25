@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class LeadsByCityServlet extends WebAppServlet{
+public class LeadsByCityServlet extends WebAppServlet {
 
     private LeadSourceRepository leadSourceRepository;
 
@@ -24,8 +24,7 @@ public class LeadsByCityServlet extends WebAppServlet{
         this.leadSourceRepository = leadSourceRepository;
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         List<Object> leadsByLeadSource = leadSourceRepository.findLeadsByCity();
         respondJson(response, leadsByLeadSource);
