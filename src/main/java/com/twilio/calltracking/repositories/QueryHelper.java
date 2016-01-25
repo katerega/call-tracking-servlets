@@ -11,8 +11,8 @@ public class QueryHelper {
         for (Object[] item : items) {
 
             Object tuple = new Object() {
-                public final String Label = (String) item[0];
-                public final Long Value = (Long) item[1];
+                public final String label = (String) item[0];
+                public final Long value = (Long) item[1];
             };
             results.add(tuple);
         }

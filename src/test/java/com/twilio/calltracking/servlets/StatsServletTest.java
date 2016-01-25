@@ -63,14 +63,14 @@ public class StatsServletTest {
         String content = new String(output.toByteArray(), "UTF-8");
 
         assertEquals(content, "[ {\n" +
-            "  \"Label\" : \"FL\",\n" +
-            "  \"Value\" : 1\n" +
+            "  \"label\" : \"FL\",\n" +
+            "  \"value\" : 1\n" +
             "}, {\n" +
-            "  \"Label\" : \"CA\",\n" +
-            "  \"Value\" : 1\n" +
+            "  \"label\" : \"CA\",\n" +
+            "  \"value\" : 1\n" +
             "}, {\n" +
-            "  \"Label\" : \"NY\",\n" +
-            "  \"Value\" : 2\n" +
+            "  \"label\" : \"NY\",\n" +
+            "  \"value\" : 2\n" +
             "} ]");
     }
 
@@ -88,11 +88,11 @@ public class StatsServletTest {
         String content = new String(output.toByteArray(), "UTF-8");
 
         assertEquals(content, "[ {\n" +
-            "  \"Label\" : \"second\",\n" +
-            "  \"Value\" : 2\n" +
+            "  \"label\" : \"second\",\n" +
+            "  \"value\" : 2\n" +
             "}, {\n" +
-            "  \"Label\" : \"first\",\n" +
-            "  \"Value\" : 2\n" +
+            "  \"label\" : \"first\",\n" +
+            "  \"value\" : 2\n" +
             "} ]");
     }
 }

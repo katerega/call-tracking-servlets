@@ -1,12 +1,12 @@
 $(document).ready(function () {
     $.get("/stats/source", function (data) {
-        console.log(data);
         CallTrackingGraph("#leads-by-source", data).draw();
+        console.log(data);
     });
 
     $.get("/stats/city", function (data) {
-        console.log(data);
         CallTrackingGraph("#leads-by-city", data).draw();
+        console.log(data);
     });
 });
 
