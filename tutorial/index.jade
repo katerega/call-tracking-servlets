@@ -1,0 +1,229 @@
+.chapter(data-title='Call Tracking with Twilio and Java Servlets')
+  .step(data-file='src/main/webapp/WEB-INF/web.xml', data-format='xml')
+    :markdown
+      ## What does this thing do?
+
+      This Java Servlets + [Gradle](//github.com/gradle/gradle) +
+      [Jetty](//docs.gradle.org/current/userguide/userguide_single.html#jetty_plugin)
+      web application shows how you can
+      use Twilio to track the effectiveness of different marketing channels.
+
+      ![Call tracking home page](//howtodocs.s3.amazonaws.com/call-tracking-home.png)
+
+      This application has three main features:
+
+      * It purchases phone numbers from Twilio to use in different marketing
+      campaigns (like a billboard or a bus advertisement)
+      * It forwards incoming calls for those phone numbers to a salesperson
+      * It displays charts showing data about the phone numbers and the calls
+      they receive
+
+      In this tutorial, we'll point out the key bits of code that make this
+      application work.
+      [Check out the project README on
+      GitHub](https://github.com/twiliodeved/call-tracking-servlets)
+      to see how to run the code yourself.
+
+      Let's get started! Click the right arrow above to advance to the next
+      code snippet.
+
+      ---
+
+      **See also:**
+
+      * [Twilio Java helper library](//www.twilio.com/docs/java/install)
+      * [Twilio REST API docs](https://www.twilio.com/docs/api)
+      * [Getting Started with Java Servlets](//docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
+      * [Getting Started with Gradle Java/JVM](//gradle.org/getting-started-gradle-java/)
+      * [What is Call Tracking?](http://www.searchenginejournal.com/seo-beginner-guide-call-tracking-care/83173/)
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/lib/services/TwilioServices.java',
+        data-highlight='34-41')
+    :markdown
+      ## Search for available phone numbers
+
+      Call tracking requires us to search for and buy phone numbers on demand,
+      associating a specific phone number with a lead source. This class
+      uses the [Twilio C# Helper
+      Library](https://www.twilio.com/docs/csharp/install)
+      to search for phone numbers by area code and return a list of numbers
+      that are available for purchase.
+
+      ---
+
+      **See also:**
+
+      * [Searching for and buying numbers in
+      twilio-ruby](http://twilio-ruby.readthedocs.org/en/latest/usage/phone-numbers.html#searching-and-buying-a-number)
+      * [Phone Number Search
+      API](https://www.twilio.com/docs/howto/search-and-buy)
+      * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/servlets/phonenumbers/AvailableServlet.java',
+        data-highlight='24-34')
+    :markdown
+      ## Display available phone numbers
+
+      We display a form to the user on the app's home page which allows them to
+      search for a new phone number by area code. At the controller level we use the
+      `TwilioServices` instances we created earlier to actually search for numbers. This
+      will render the view that contains a list of numbers they can choose to buy.
+
+      ---
+
+      **See also:**
+
+      * [Phone Number Search
+      API](https://www.twilio.com/docs/howto/search-and-buy)
+      * [Twilio.Api
+      Wiki](https://github.com/twilio/twilio-csharp/wiki/Twilio.Api)
+
+  .step(data-file='src/main/java/com/twilio/calltracking/lib/services/TwilioServices.java',
+        data-highlight='43-56')
+    :markdown
+      ## Buy a phone number
+
+      Our `purchasePhoneNumber` method takes a phone number as its
+      sole parameter and uses our Twilio API client to purchase the
+      available phone number our user chooses.
+
+      ---
+
+      **See also:**
+
+      * [Phone Number Search
+      API](https://www.twilio.com/docs/howto/search-and-buy)
+      * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
+      * [Twilio.Api
+      Wiki](https://github.com/twilio/twilio-csharp/wiki/Twilio.Api)
+
+  .step(data-file='src/main/java/com/twilio/calltracking/servlets/leadsources/CreateServlet.java',
+        data-highlight='32-52')
+    :markdown
+      ## Associate a phone number with a lead source
+
+      Once we search for and buy a Twilio number, we need to associate it with a
+      lead source in our database. This is the core of a call tracking application.
+      Any phone calls to our new Twilio number will be attributed to this source.
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/models/LeadSource.java')
+    :markdown
+      ## The LeadSource model
+
+      The `LeadSource` model associates a Twilio number to a named lead source
+      (like "Wall Street Journal Ad" or "Dancing guy with sign"). It also tracks
+      a phone number to which we'd like all the calls redirected, like your sales
+      or support help line.
+
+      ---
+
+      **See also:**
+
+      * [Executing Flyway Migrations with Gradle](//flywaydb.org/documentation/gradle/migrate.html)
+      * [JDBC Basics](//docs.oracle.com/javase/tutorial/jdbc/basics/index.html)
+      * [JPA Entities Definition](//docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html)
+      * [JPA Entities Relations](//docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html#bnbqh)
+
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/models/LeadSource.java')
+    :markdown
+      ## The Lead model
+
+      A `Lead` represents a phone call generated by a `LeadSource`. Each time
+      somebody calls a phone number associated with a `LeadSource`, we'll use the `Lead` model to
+      record some of the [data Twilio gives us](https://www.twilio.com/docs/api/twiml/twilio_request)
+      about their call.
+
+      ---
+
+      **See also:**
+
+      * [JPA Entities Relations](//docs.oracle.com/javaee/6/tutorial/doc/bnbqa.html#bnbqh)
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/servlets/calltracking/LeadCallServlet.java',
+        data-highlight='32-51')
+    :markdown
+      ## Forward calls and create leads
+
+      Whenever a customer calls one of our Twilio numbers, Twilio will send a POST
+      request to the URL associated with this action (should be
+      `/lead`).
+
+      We use the incoming call data to create a new `Lead` for a `LeadSource`,
+      then return [TwiML](https://www.twilio.com/docs/api/twiml) that connects our caller
+      with the `forwardingNumber` of our `LeadSource`.
+
+      ---
+
+      **See also:**
+
+      * [Twilio voice request parameters](https://www.twilio.com/docs/api/twiml/twilio_request)
+      * [Twilio's TwiML](//www.twilio.com/docs/quickstart/java/sms/hello-monkey)
+      * [TwiML <Dial> verb](https://www.twilio.com/docs/api/twiml/dial)
+
+
+  .step(data-file='src/main/java/com/twilio/calltracking/repositories/LeadSourceRepository.java',
+        data-highlight='29-41')
+    :markdown
+      ## Get statistics about our lead sources
+
+      One useful statistic we can [get from our data](//github.com/TwilioDevEd/call-tracking-servlets/blob/a09ece1216927eb866f2f1fc63a542bbdb5274ed/src/main/java/com/twilio/calltracking/servlets/stats/LeadsBySourceServlet.java#L23-L27)
+      is how many calls each
+      `LeadSource` has received. We query over `LeadSource` and count its `Lead` models.
+
+      ---
+
+      **See also:**
+
+      * [Group Elements in a JPA Query](//www.objectdb.com/java/jpa/query/jpql/group)
+
+
+  .step(data-file='src/main/webapp/scripts/call-tracking.js')
+    :markdown
+      ## Visualize our statistics with Chart.js
+
+      Back on the home page, we fetch call tracking statistics
+      [in JSON from the
+      server](https://github.com/TwilioDevEd/call-tracking-servlets/blob/a09ece1216927eb866f2f1fc63a542bbdb5274ed/src/main/java/com/twilio/calltracking/servlets/WebAppServlet.java#L30-L36)
+      using [Jackson/ObjectMapper](//www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/)
+      and [jQuery](https://api.jquery.com/jquery.get/).
+      We display the stats in colorful pie charts we create with [Chart.js](http://www.chartjs.org/).
+
+      ![Call tracking charts](//howtodocs.s3.amazonaws.com/call-tracking-charts.png)
+
+      ---
+
+      **See also:**
+
+      * [Chart.js](http://www.chartjs.org/)
+
+
+  .step(data-file='src/main/webapp/scripts/call-tracking.js')
+    :markdown
+      ## Where to next?
+
+      That's it! Our Java Servlet application is now ready to purchase new phone
+      numbers, forward incoming calls, and record some statistics for our
+      business.
+
+      If you're a Java developer working with Twilio, you might enjoy these
+      other tutorials:
+
+      [**SMS and MMS notifications**](//www.twilio.com/docs/tutorials/walkthrough/server-notifications/java/servlets)
+
+      Build a server notification system that will alert all administrators via SMS when a server outage occurs.
+
+      [**Click To Call**](//www.twilio.com/docs/tutorials/walkthrough/click-to-call/java/servlets)
+
+      Convert web traffic into phone calls with the click of a button.
+
+      ### Did this help?
+
+      Thanks for checking out this tutorial! If you have any feedback to share
+      with us, we'd love to hear it. Tweet
+      [@twilio](http://twitter.com/twilio) to let us know what you think.
