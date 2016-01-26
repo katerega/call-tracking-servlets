@@ -31,7 +31,7 @@ public class LeadSourceRepository extends Repository<LeadSource> {
         List items = null;
         try {
             items = getEm().createQuery(
-                "SELECT s.name as Source, COUNT(l) as Quantity FROM LeadSource s JOIN s.leads l GROUP BY s.name")
+                "SELECT s.name, COUNT(l) FROM LeadSource s JOIN s.leads l GROUP BY s.name")
                 .getResultList();
         } catch (NoResultException ex) {
             System.out.println(ex.getMessage());
