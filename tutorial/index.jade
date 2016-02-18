@@ -35,8 +35,6 @@
       * [Twilio REST API docs](https://www.twilio.com/docs/api)
       * [Getting Started with Java Servlets](//docs.oracle.com/javaee/6/tutorial/doc/bnafd.html)
       * [Getting Started with Gradle Java/JVM](//gradle.org/getting-started-gradle-java/)
-      * [What is Call Tracking?](http://www.searchenginejournal.com/seo-beginner-guide-call-tracking-care/83173/)
-
 
   .step(data-file='src/main/java/com/twilio/calltracking/lib/services/TwilioServices.java',
         data-highlight='34-41')
@@ -45,8 +43,8 @@
 
       Call tracking requires us to search for and buy phone numbers on demand,
       associating a specific phone number with a lead source. This class
-      uses the [Twilio C# Helper
-      Library](https://www.twilio.com/docs/csharp/install)
+      uses the [Twilio Java Helper
+      Library](//www.twilio.com/docs/java/install)
       to search for phone numbers by area code and return a list of numbers
       that are available for purchase.
 
@@ -54,10 +52,7 @@
 
       **See also:**
 
-      * [Searching for and buying numbers in
-      twilio-ruby](http://twilio-ruby.readthedocs.org/en/latest/usage/phone-numbers.html#searching-and-buying-a-number)
-      * [Phone Number Search
-      API](https://www.twilio.com/docs/howto/search-and-buy)
+      * [Searching for and buying numbers in Java](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-1)
       * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
 
 
@@ -77,8 +72,7 @@
 
       * [Phone Number Search
       API](https://www.twilio.com/docs/howto/search-and-buy)
-      * [Twilio.Api
-      Wiki](https://github.com/twilio/twilio-csharp/wiki/Twilio.Api)
+      * [Twilio JavaDocs](http://twilio.github.io/twilio-java/)
 
   .step(data-file='src/main/java/com/twilio/calltracking/lib/services/TwilioServices.java',
         data-highlight='43-56')
@@ -93,11 +87,7 @@
 
       **See also:**
 
-      * [Phone Number Search
-      API](https://www.twilio.com/docs/howto/search-and-buy)
       * [Twilio REST API: Available Phone Numbers](https://www.twilio.com/docs/api/rest/available-phone-numbers)
-      * [Twilio.Api
-      Wiki](https://github.com/twilio/twilio-csharp/wiki/Twilio.Api)
 
   .step(data-file='src/main/java/com/twilio/calltracking/servlets/leadsources/CreateServlet.java',
         data-highlight='32-52')
