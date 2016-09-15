@@ -2,7 +2,6 @@ package com.twilio.calltracking.servlets.stats;
 
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.WebAppServlet;
-import javafx.beans.binding.ObjectExpression;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +11,7 @@ import java.util.List;
 public class LeadsBySourceServlet extends WebAppServlet {
     private LeadSourceRepository leadSourceRepository;
 
+    @SuppressWarnings("unused")
     public LeadsBySourceServlet() {
         this(new LeadSourceRepository());
     }
@@ -25,5 +25,5 @@ public class LeadsBySourceServlet extends WebAppServlet {
         List<Object> leadsByLeadSource = leadSourceRepository.findLeadsByLeadSource();
         respondJson(response, leadsByLeadSource);
     }
-
 }
+

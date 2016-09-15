@@ -1,10 +1,11 @@
 package com.twilio.calltracking.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.twilio.calltracking.lib.utilities.Lazy;
 import com.twilio.calltracking.lib.web.request.validators.RequestParametersValidator;
-import com.twilio.sdk.verbs.TwiMLResponse;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
+import com.twilio.twiml.TwiMLException;
+import com.twilio.twiml.VoiceResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +22,14 @@ public class WebAppServlet extends HttpServlet {
         requestValidator = new Lazy<>(RequestParametersValidator::new);
     }
 
-    protected void respondTwiML(HttpServletResponse response, TwiMLResponse twiMLResponse)
+    protected void respondTwiML(HttpServletResponse response, VoiceResponse voiceResponse)
         throws IOException {
         response.setContentType("text/xml");
-        response.getWriter().write(twiMLResponse.toXML());
+        try {
+            response.getWriter().write(voiceResponse.toXml());
+        } catch (TwiMLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void respondJson(HttpServletResponse response, Object object) throws IOException {
@@ -33,10 +38,6 @@ public class WebAppServlet extends HttpServlet {
 
         response.setContentType("application/json");
         response.getWriter().write(json);
-    }
-
-    protected void respondContent(HttpServletResponse response, String content) throws IOException {
-        response.getWriter().write(content);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +51,6 @@ public class WebAppServlet extends HttpServlet {
     }
 
     protected boolean isValidRequest(RequestParametersValidator validator) {
-
         return true;
     }
 }

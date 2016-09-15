@@ -1,13 +1,9 @@
 package com.twilio.calltracking.servlets.leadsources;
 
-import com.twilio.calltracking.lib.Config;
-import com.twilio.calltracking.lib.services.TwilioServices;
 import com.twilio.calltracking.lib.web.request.validators.RequestParametersValidator;
 import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.WebAppServlet;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.instance.IncomingPhoneNumber;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +16,7 @@ public class EditServlet extends WebAppServlet {
     private LeadSourceRepository leadSourceRepository;
 
 
+    @SuppressWarnings("unused")
     public EditServlet() {
         this(new LeadSourceRepository());
     }
