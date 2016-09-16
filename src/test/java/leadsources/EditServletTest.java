@@ -17,28 +17,30 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class EditServletTest extends BaseTwilioServletTest {
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    RequestDispatcher requestDispatcher;
+    private RequestDispatcher requestDispatcher;
 
     @Mock
-    TwilioServices twilioServices;
+    private TwilioServices twilioServices;
 
     @Mock
-    LeadSourceRepository leadSourceRepository;
+    private LeadSourceRepository leadSourceRepository;
 
     @Mock
-    LeadSource leadSource;
+    private LeadSource leadSource;
 
     @Before
     public void setUp() throws IOException {
@@ -55,7 +57,7 @@ public class EditServletTest extends BaseTwilioServletTest {
     }
 
     @Test
-    public void postMethodToEditServlet_EditsALeadSource() throws Exception {
+    public void postMethodToEditServletEditsALeadSource() throws Exception {
 
         when(request.getParameter("id")).thenReturn("1");
         when(request.getParameter("name")).thenReturn("Name");
@@ -70,7 +72,7 @@ public class EditServletTest extends BaseTwilioServletTest {
     }
 
     @Test
-    public void postMethodToEditServlet_RedirectsToDashboardOnSuccess() throws Exception {
+    public void postMethodToEditServletRedirectsToDashboardOnSuccess() throws Exception {
 
         when(request.getParameter("id")).thenReturn("1");
         when(request.getParameter("name")).thenReturn("Name");

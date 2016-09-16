@@ -1,24 +1,29 @@
-group 'com.twilio.calltracking'
-version '1.0'
-
 buildscript {
-    repositories {
-        jcenter()
-    }
     dependencies {
         classpath 'org.postgresql:postgresql:9.4-1206-jdbc42'
         classpath 'org.flywaydb:flyway-gradle-plugin:3.2.1'
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'jetty'
-apply plugin: 'org.flywaydb.flyway'
+plugins {
+    id 'java'
+    id 'jetty'
+    id 'checkstyle'
+    id "org.flywaydb.flyway" version "4.0.3"
+}
+
+checkstyle {
+    toolVersion = "6.1.1"
+}
+
+group 'com.twilio.calltracking'
+version '1.0'
 
 jettyRun.contextPath = '';
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {

@@ -31,17 +31,16 @@ public class EditServlet extends WebAppServlet {
         String id = request.getParameter("id");
 
         if (id == null || Objects.equals(id, "")) {
-            response.sendError(400, "Missed resource params." );
-        } else{
+            response.sendError(400, "Missed resource params.");
+        } else {
             LeadSource leadSource = leadSourceRepository.find(Long.valueOf(id));
 
-            if (leadSource == null){
-                response.sendError(404, "Resource not found" );
+            if (leadSource == null) {
+                response.sendError(404, "Resource not found");
             } else {
-                request.setAttribute("leadSource",leadSource);
+                request.setAttribute("leadSource", leadSource);
                 request.getRequestDispatcher("/lead-source-edit.jsp").forward(request, response);
             }
-
         }
     }
 
@@ -69,8 +68,8 @@ public class EditServlet extends WebAppServlet {
 
             leadSource = leadSourceRepository.find(Long.valueOf(id));
 
-            if (leadSource == null){
-                response.sendError(404, "Resource not found" );
+            if (leadSource == null) {
+                response.sendError(404, "Resource not found");
             } else {
                 leadSource.setName(name);
                 leadSource.setIncomingNumberNational(incomingNumberNational);
@@ -83,14 +82,27 @@ public class EditServlet extends WebAppServlet {
             }
         }
 
-        preserveStatusRequest(request, id, name, incomingNumberNational, incomingNumberInternational, forwardingNumber, leadSource);
+        preserveStatusRequest(
+                request,
+                id,
+                name,
+                incomingNumberNational,
+                incomingNumberInternational,
+                forwardingNumber,
+                leadSource);
+
         request.getRequestDispatcher("/lead-source-edit.jsp").forward(request, response);
     }
 
     @Override
     protected boolean isValidRequest(RequestParametersValidator validator) {
 
-        return validator.validatePresence("id", "name", "incomingNumberNational", "incomingNumberInternational", "forwardingNumber");
+        return validator.validatePresence(
+                "id",
+                "name",
+                "incomingNumberNational",
+                "incomingNumberInternational",
+                "forwardingNumber");
     }
 
     private void preserveStatusRequest(

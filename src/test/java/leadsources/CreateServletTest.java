@@ -5,7 +5,6 @@ import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.BaseTwilioServletTest;
 import com.twilio.calltracking.servlets.leadsources.CreateServlet;
-import com.twilio.calltracking.servlets.leadsources.EditServlet;
 import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
 import com.twilio.type.PhoneNumber;
 import org.junit.Before;
@@ -24,7 +23,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,24 +34,24 @@ import static org.mockito.Mockito.when;
 public class CreateServletTest extends BaseTwilioServletTest {
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    RequestDispatcher requestDispatcher;
+    private RequestDispatcher requestDispatcher;
 
     @Mock
-    TwilioServices twilioServices;
+    private TwilioServices twilioServices;
 
     @Mock
-    LeadSourceRepository leadSourceRepository;
+    private LeadSourceRepository leadSourceRepository;
 
-    Local incomingPhoneNumber;
+    private Local incomingPhoneNumber;
 
     @Mock
-    LeadSource leadSource;
+    private LeadSource leadSource;
 
     @Before
     public void setUp() throws IOException {
@@ -74,7 +75,7 @@ public class CreateServletTest extends BaseTwilioServletTest {
     }
 
     @Test
-    public void postMethodToCreateServlet_CreatesALeadSource() throws Exception {
+    public void postMethodToCreateServletCreatesALeadSource() throws Exception {
         // Given
         when(request.getParameter("phoneNumber")).thenReturn("+14159699064");
 
@@ -87,7 +88,7 @@ public class CreateServletTest extends BaseTwilioServletTest {
     }
 
     @Test
-    public void postMethodToCreateServlet_RedirectsToEditViewOnSuccess() throws Exception {
+    public void postMethodToCreateServletRedirectsToEditViewOnSuccess() throws Exception {
 
         when(request.getParameter("phoneNumber")).thenReturn("+14159699064");
 

@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@SuppressWarnings("checkstyle:VisibilityModifierCheck")
 public class WebAppServlet extends HttpServlet {
 
-    protected Lazy<RequestParametersValidator> requestValidator;
-
+    private Lazy<RequestParametersValidator> requestValidator;
 
     protected WebAppServlet() {
         requestValidator = new Lazy<>(RequestParametersValidator::new);

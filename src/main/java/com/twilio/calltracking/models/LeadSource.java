@@ -39,7 +39,8 @@ public class LeadSource {
         this.leads = new ArrayList<>();
     }
 
-    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational) {
+    public LeadSource(
+            String name, String incomingNumberNational, String incomingNumberInternational) {
         this(incomingNumberNational, incomingNumberInternational);
         this.name = name;
     }

@@ -23,16 +23,16 @@ import static org.mockito.Mockito.when;
 public class AvailableServletTest {
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    RequestDispatcher requestDispatcher;
+    private RequestDispatcher requestDispatcher;
 
     @Mock
-    TwilioServices twilioServices;
+    private TwilioServices twilioServices;
 
     @Before
     public void setUp() throws IOException {
@@ -40,7 +40,7 @@ public class AvailableServletTest {
     }
 
     @Test
-    public void getMethod_ReturnsListOfPhoneNumbers() throws Exception {
+    public void getMethodReturnsListOfPhoneNumbers() throws Exception {
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(request.getParameter("areaCode")).thenReturn("412");

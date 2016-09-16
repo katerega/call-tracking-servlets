@@ -20,19 +20,23 @@ import static org.mockito.Mockito.when;
 
 public class DashboardServletTest {
 
-    @Mock HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-    @Mock HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-    @Mock RequestDispatcher requestDispatcher;
+    @Mock
+    private RequestDispatcher requestDispatcher;
 
-    @Mock LeadSourceRepository leadSourceRepository;
+    @Mock
+    private LeadSourceRepository leadSourceRepository;
 
     @Before public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test public void getMethod_ReturnsListOfPhoneNumbers() throws Exception {
+    @Test public void getMethodReturnsListOfPhoneNumbers() throws Exception {
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 
