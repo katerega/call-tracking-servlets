@@ -1,10 +1,9 @@
-package leadsources;
+package com.twilio.calltracking.servlets.leadsources;
 
 import com.twilio.calltracking.lib.services.TwilioServices;
 import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.BaseTwilioServletTest;
-import com.twilio.calltracking.servlets.leadsources.EditServlet;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -86,3 +85,4 @@ public class EditServletTest extends BaseTwilioServletTest {
         verifyRedirectTo(response, "dashboard");
     }
 }
+
