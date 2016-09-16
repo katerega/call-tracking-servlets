@@ -28,10 +28,10 @@ public class AvailableServlet extends WebAppServlet {
         String areaCode = request.getParameter("areaCode");
 
         request.setAttribute("phoneNumbers",
-            twilioServices.searchPhoneNumbers(Integer.parseInt(areaCode))
-                    .stream()
-                    .limit(10)
-                    .collect(Collectors.toList()));
+                twilioServices.searchPhoneNumbers(areaCode)
+                        .stream()
+                        .limit(10)
+                        .collect(Collectors.toList()));
 
         request.getRequestDispatcher("/available_phone_numbers.jsp").forward(request, response);
     }

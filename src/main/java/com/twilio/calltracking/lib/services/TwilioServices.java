@@ -5,6 +5,7 @@ import com.twilio.base.ResourceSet;
 import com.twilio.calltracking.lib.Config;
 import com.twilio.rest.api.v2010.account.Application;
 import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Local;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.LocalReader;
 import com.twilio.rest.api.v2010.account.incomingphonenumber.LocalCreator;
 import com.twilio.type.PhoneNumber;
 
@@ -21,12 +22,14 @@ public class TwilioServices {
         Twilio.init(Config.getAccountSid(), Config.getAuthToken());
     }
 
-    public List<Local> searchPhoneNumbers(int areaCode) {
-        Iterator<Local> phoneNumbers = Local
-                .read("US")
-                .byAreaCode(areaCode)
-                .execute()
-                .iterator();
+    public List<Local> searchPhoneNumbers(String areaCode) {
+
+        LocalReader localReader = Local.read("US");
+        if (areaCode != null) {
+            localReader.byAreaCode(Integer.parseInt(areaCode));
+        }
+
+        Iterator<Local> phoneNumbers = localReader.execute().iterator();
 
         List<Local> phoneNumbersAsList = new ArrayList<>();
         phoneNumbers.forEachRemaining(phoneNumbersAsList::add);

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +45,7 @@ public class AvailableServletTest {
         when(request.getParameter("areaCode")).thenReturn("412");
 
         List<Local> phoneNumbers = new ArrayList<>();
-        when(twilioServices.searchPhoneNumbers(anyInt())).thenReturn(phoneNumbers);
+        when(twilioServices.searchPhoneNumbers(anyString())).thenReturn(phoneNumbers);
 
         AvailableServlet servlet = new AvailableServlet(twilioServices);
         servlet.doGet(request, response);
