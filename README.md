@@ -69,7 +69,7 @@ This project is build using [Java 8](http://www.oracle.com/technetwork/java/java
 1. Run the application.
 
    ```bash
-   $ ./gradlew jettyRun
+   $ ./gradlew appRun
    ```
 
 1. Check it out at [http://localhost:8080](http://localhost:8080)

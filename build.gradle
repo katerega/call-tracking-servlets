@@ -7,9 +7,9 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'jetty'
     id 'checkstyle'
-    id "org.flywaydb.flyway" version "4.0.3"
+    id 'org.flywaydb.flyway' version '4.0.3'
+    id 'org.akhikhl.gretty' version '1.2.4'
 }
 
 checkstyle {
@@ -18,8 +18,6 @@ checkstyle {
 
 group 'com.twilio.calltracking'
 version '1.0'
-
-jettyRun.contextPath = '';
 
 repositories {
     jcenter()
@@ -47,3 +45,6 @@ flyway {
     password = "$System.env.DB_PASSWORD"
     url = "$System.env.JDBC_URL"
 }
+
+//Change context path (base url). otherwise defaults to name of project
+gretty.contextPath = ''
