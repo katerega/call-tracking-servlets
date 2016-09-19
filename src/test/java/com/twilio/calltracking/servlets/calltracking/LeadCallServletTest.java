@@ -19,24 +19,29 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class LeadCallServletTest extends BaseTwilioServletTest {
 
-    @Mock HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-    @Mock HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-    @Mock RequestDispatcher requestDispatcher;
+    @Mock
+    private RequestDispatcher requestDispatcher;
 
-    @Mock TwilioServices twilioServices;
+    @Mock
+    private TwilioServices twilioServices;
 
-    @Mock LeadRepository leadRepository;
+    @Mock
+    private LeadRepository leadRepository;
 
-    @Mock LeadSourceRepository leadSourceRepository;
+    @Mock
+    private LeadSourceRepository leadSourceRepository;
 
     @Before public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
@@ -58,7 +63,7 @@ public class LeadCallServletTest extends BaseTwilioServletTest {
 
     }
 
-    @Test public void postMethod_FindsTheLeadSourceAndCreatesALeadForTheGivenCalled()
+    @Test public void postMethodFindsTheLeadSourceAndCreatesALeadForTheGivenCalled()
         throws Exception {
 
         LeadCallServlet servlet = new LeadCallServlet(leadSourceRepository, leadRepository);

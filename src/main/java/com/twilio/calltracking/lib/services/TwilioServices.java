@@ -1,86 +1,65 @@
 package com.twilio.calltracking.lib.services;
 
+import com.twilio.Twilio;
+import com.twilio.base.ResourceSet;
 import com.twilio.calltracking.lib.Config;
-import com.twilio.sdk.TwilioRestClient;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.factory.IncomingPhoneNumberFactory;
-import com.twilio.sdk.resource.instance.Account;
-import com.twilio.sdk.resource.instance.Application;
-import com.twilio.sdk.resource.instance.AvailablePhoneNumber;
-import com.twilio.sdk.resource.instance.IncomingPhoneNumber;
-import com.twilio.sdk.resource.list.ApplicationList;
-import com.twilio.sdk.resource.list.AvailablePhoneNumberList;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import com.twilio.rest.api.v2010.account.Application;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Local;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.LocalReader;
+import com.twilio.rest.api.v2010.account.incomingphonenumber.LocalCreator;
+import com.twilio.type.PhoneNumber;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-@SuppressWarnings("unused") public class TwilioServices {
+@SuppressWarnings("unused")
+public class TwilioServices {
 
-    private final TwilioRestClient client;
-    private static final String DefaultAppName = "Call tracking app";
+    private static final String DEFAULT_APP_NAME = "Call Tracking App";
 
     public TwilioServices() {
-        client = new TwilioRestClient(Config.getAccountSid(), Config.getAuthToken());
+        Twilio.init(Config.getAccountSid(), Config.getAuthToken());
     }
 
-    public TwilioServices(TwilioRestClient client) {
-        this.client = client;
-    }
+    public List<Local> searchPhoneNumbers(String areaCode) {
 
-    public List<AvailablePhoneNumber> searchPhoneNumbers(String areaCode) {
-        Map<String, String> searchParams = new HashMap<>();
-        searchParams.put("AreaCode", areaCode);
-
-        AvailablePhoneNumberList phoneNumbers;
-        phoneNumbers = getAccount().getAvailablePhoneNumbers(searchParams, "US", "Local");
-        return phoneNumbers.getPageData();
-    }
-
-    public IncomingPhoneNumber purchasePhoneNumber(String phoneNumber, String applicationSid) {
-        try {
-            Map<String, String> buyParams = new HashMap<>();
-            buyParams.put("PhoneNumber", phoneNumber);
-            buyParams.put("VoiceApplicationSid", applicationSid);
-            getAccount().getIncomingPhoneNumberFactory().create(buyParams);
-
-            return getIncomingPhoneNumberFactory().create(buyParams);
-
-        } catch (TwilioRestException e) {
-            e.printStackTrace();
+        LocalReader localReader = Local.read("US");
+        if (areaCode != null) {
+            localReader.byAreaCode(Integer.parseInt(areaCode));
         }
-        return null;
+
+        Iterator<Local> phoneNumbers = localReader.execute().iterator();
+
+        List<Local> phoneNumbersAsList = new ArrayList<>();
+        phoneNumbers.forEachRemaining(phoneNumbersAsList::add);
+
+        return phoneNumbersAsList;
     }
 
-    public String getApplicationSid() throws TwilioRestException {
-        Map<String, String> params = new HashMap<>();
-        params.put("FriendlyName", TwilioServices.DefaultAppName);
-        Application app = getAccount().getApplications(params).getPageData().get(0);
+    public com.twilio.rest.api.v2010.account.incomingphonenumber.Local purchasePhoneNumber(
+            String phoneNumber, String applicationSid) {
 
-        if (app != null) {
-            List<NameValuePair> newAppParams = new ArrayList<>();
-            newAppParams.add(new BasicNameValuePair("FriendlyName", TwilioServices.DefaultAppName));
-            app = getAccount().getApplicationFactory().create(newAppParams);
-        }
+        return new LocalCreator(new PhoneNumber(phoneNumber))
+                .setVoiceApplicationSid(applicationSid)
+                .execute();
+    }
+
+    public String getApplicationSid() {
+        ResourceSet<Application> apps = getApplications();
+
+        Application app = apps.iterator().hasNext()
+                ? apps.iterator().next()
+                : Application.create(DEFAULT_APP_NAME).execute();
 
         return app.getSid();
     }
 
-    private List<AvailablePhoneNumber> getAvailablePhoneNumbers(Account account,
-        Map<String, String> searchParams) {
-        AvailablePhoneNumberList phoneNumbers;
-        phoneNumbers = account.getAvailablePhoneNumbers(searchParams, "US", "Local");
-        return phoneNumbers.getPageData();
-    }
-
-    private Account getAccount() {
-        return client.getAccount();
-    }
-
-    private IncomingPhoneNumberFactory getIncomingPhoneNumberFactory() {
-        return getAccount().getIncomingPhoneNumberFactory();
+    private ResourceSet<Application> getApplications() {
+        return Application
+                .read()
+                .byFriendlyName(DEFAULT_APP_NAME)
+                .execute();
     }
 }
+

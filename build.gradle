@@ -1,25 +1,27 @@
-group 'com.twilio.calltracking'
-version '1.0'
-
 buildscript {
-    repositories {
-        jcenter()
-    }
     dependencies {
         classpath 'org.postgresql:postgresql:9.4-1206-jdbc42'
         classpath 'org.flywaydb:flyway-gradle-plugin:3.2.1'
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'jetty'
-apply plugin: 'org.flywaydb.flyway'
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'org.flywaydb.flyway' version '4.0.3'
+    id 'org.akhikhl.gretty' version '1.2.4'
+}
 
-jettyRun.contextPath = '';
-sourceCompatibility = 1.8
+checkstyle {
+    toolVersion = "6.1.1"
+}
+
+group 'com.twilio.calltracking'
+version '1.0'
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -28,10 +30,12 @@ dependencies {
     compile 'org.eclipse.persistence:eclipselink:2.6.2'
     compile 'org.postgresql:postgresql:9.4-1206-jdbc42'
     compile 'kr.pe.kwonnam.jsp:jsp-template-inheritance:0.3.RELEASE'
-    compile 'com.twilio.sdk:twilio-java-sdk:5.5.1'
+    compile 'com.twilio.sdk:twilio:7.0.0-rc-25'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
+
     testCompile 'org.jdom:jdom:2.0.2'
     testCompile 'pl.pragmatists:JUnitParams:1.0.4'
 }
@@ -41,3 +45,6 @@ flyway {
     password = "$System.env.DB_PASSWORD"
     url = "$System.env.JDBC_URL"
 }
+
+//Change context path (base url). otherwise defaults to name of project
+gretty.contextPath = ''

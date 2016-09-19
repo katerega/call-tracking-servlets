@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class Lazy<T> {
+
     private Optional<T> instance = Optional.empty();
     private Supplier<T> supplier;
 

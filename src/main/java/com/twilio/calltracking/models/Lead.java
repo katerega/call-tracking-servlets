@@ -1,18 +1,38 @@
 package com.twilio.calltracking.models;
 
-import javax.persistence.*;
 
-@SuppressWarnings("unused") @Entity @Table(name = "leads") public class Lead {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "id") private long id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    @Column(name = "phone_number") private String phoneNumber;
+@SuppressWarnings("unused")
+@Entity
+@Table(name = "leads")
+public class Lead {
 
-    @Column(name = "city") private String city;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
 
-    @Column(name = "state") private String state;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "lead_source_id") private LeadSource
-        leadSource;
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "state")
+    private String state;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lead_source_id")
+    private LeadSource leadSource;
 
     public Lead() {
     }
@@ -64,3 +84,4 @@ import javax.persistence.*;
         this.leadSource = leadSource;
     }
 }
+

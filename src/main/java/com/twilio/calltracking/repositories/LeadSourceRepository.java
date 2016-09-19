@@ -1,10 +1,9 @@
 package com.twilio.calltracking.repositories;
 
 import com.twilio.calltracking.models.LeadSource;
-import javafx.beans.binding.ObjectExpression;
 
 import javax.persistence.NoResultException;
-import java.util.*;
+import java.util.List;
 
 public class LeadSourceRepository extends Repository<LeadSource> {
 

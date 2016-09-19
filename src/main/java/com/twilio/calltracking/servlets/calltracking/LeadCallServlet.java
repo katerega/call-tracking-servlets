@@ -5,9 +5,9 @@ import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadRepository;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.WebAppServlet;
-import com.twilio.sdk.verbs.Dial;
-import com.twilio.sdk.verbs.TwiMLException;
-import com.twilio.sdk.verbs.TwiMLResponse;
+import com.twilio.twiml.Dial;
+import com.twilio.twiml.Number;
+import com.twilio.twiml.VoiceResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +19,7 @@ public class LeadCallServlet extends WebAppServlet {
     private LeadSourceRepository leadSourceRepository;
     private LeadRepository leadRepository;
 
+    @SuppressWarnings("unused")
     public LeadCallServlet() {
         this(new LeadSourceRepository(), new LeadRepository());
     }
@@ -40,13 +41,11 @@ public class LeadCallServlet extends WebAppServlet {
         LeadSource ls = leadSourceRepository.findByIncomingNumberInternational(called);
         leadRepository.create(new Lead(caller,  city, state, ls));
 
-        TwiMLResponse twiMLResponse = new TwiMLResponse();
-        try {
-            twiMLResponse.append(new Dial(ls.getForwardingNumber()));
-        } catch (TwiMLException e) {
-            e.printStackTrace();
-        }
+        Number number = new Number.Builder(ls.getForwardingNumber()).build();
+        VoiceResponse voiceResponse = new VoiceResponse.Builder()
+                .dial(new Dial.Builder().number(number).build())
+                .build();
 
-        respondTwiML(response, twiMLResponse);
+        respondTwiML(response, voiceResponse);
     }
 }

@@ -1,13 +1,9 @@
 package com.twilio.calltracking.servlets.leadsources;
 
-import com.twilio.calltracking.lib.Config;
-import com.twilio.calltracking.lib.services.TwilioServices;
 import com.twilio.calltracking.lib.web.request.validators.RequestParametersValidator;
 import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.WebAppServlet;
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.resource.instance.IncomingPhoneNumber;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +16,7 @@ public class EditServlet extends WebAppServlet {
     private LeadSourceRepository leadSourceRepository;
 
 
+    @SuppressWarnings("unused")
     public EditServlet() {
         this(new LeadSourceRepository());
     }
@@ -34,17 +31,16 @@ public class EditServlet extends WebAppServlet {
         String id = request.getParameter("id");
 
         if (id == null || Objects.equals(id, "")) {
-            response.sendError(400, "Missed resource params." );
-        } else{
+            response.sendError(400, "Missed resource params.");
+        } else {
             LeadSource leadSource = leadSourceRepository.find(Long.valueOf(id));
 
-            if (leadSource == null){
-                response.sendError(404, "Resource not found" );
+            if (leadSource == null) {
+                response.sendError(404, "Resource not found");
             } else {
-                request.setAttribute("leadSource",leadSource);
+                request.setAttribute("leadSource", leadSource);
                 request.getRequestDispatcher("/lead-source-edit.jsp").forward(request, response);
             }
-
         }
     }
 
@@ -72,8 +68,8 @@ public class EditServlet extends WebAppServlet {
 
             leadSource = leadSourceRepository.find(Long.valueOf(id));
 
-            if (leadSource == null){
-                response.sendError(404, "Resource not found" );
+            if (leadSource == null) {
+                response.sendError(404, "Resource not found");
             } else {
                 leadSource.setName(name);
                 leadSource.setIncomingNumberNational(incomingNumberNational);
@@ -86,14 +82,27 @@ public class EditServlet extends WebAppServlet {
             }
         }
 
-        preserveStatusRequest(request, id, name, incomingNumberNational, incomingNumberInternational, forwardingNumber, leadSource);
+        preserveStatusRequest(
+                request,
+                id,
+                name,
+                incomingNumberNational,
+                incomingNumberInternational,
+                forwardingNumber,
+                leadSource);
+
         request.getRequestDispatcher("/lead-source-edit.jsp").forward(request, response);
     }
 
     @Override
     protected boolean isValidRequest(RequestParametersValidator validator) {
 
-        return validator.validatePresence("id", "name", "incomingNumberNational", "incomingNumberInternational", "forwardingNumber");
+        return validator.validatePresence(
+                "id",
+                "name",
+                "incomingNumberNational",
+                "incomingNumberInternational",
+                "forwardingNumber");
     }
 
     private void preserveStatusRequest(
