@@ -1,7 +1,7 @@
 package com.twilio.calltracking.servlets.phonenumbers;
 
 import com.twilio.calltracking.lib.services.TwilioServices;
-import com.twilio.sdk.resource.instance.AvailablePhoneNumber;
+import com.twilio.rest.api.v2010.account.availablephonenumbercountry.Local;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,23 +21,30 @@ import static org.mockito.Mockito.when;
 
 public class AvailableServletTest {
 
-    @Mock HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-    @Mock HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-    @Mock RequestDispatcher requestDispatcher;
+    @Mock
+    private RequestDispatcher requestDispatcher;
 
-    @Mock TwilioServices twilioServices;
+    @Mock
+    private TwilioServices twilioServices;
 
-    @Before public void setUp() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test public void getMethod_ReturnsListOfPhoneNumbers() throws Exception {
+    @Test
+    public void getMethodReturnsListOfPhoneNumbers() throws Exception {
 
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        when(request.getParameter("areaCode")).thenReturn("412");
 
-        List<AvailablePhoneNumber> phoneNumbers = new ArrayList<>();
+        List<Local> phoneNumbers = new ArrayList<>();
         when(twilioServices.searchPhoneNumbers(anyString())).thenReturn(phoneNumbers);
 
         AvailableServlet servlet = new AvailableServlet(twilioServices);

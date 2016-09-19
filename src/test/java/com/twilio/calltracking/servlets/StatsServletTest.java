@@ -23,15 +23,21 @@ import static org.mockito.Mockito.when;
 
 public class StatsServletTest {
 
-    @Mock HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-    @Mock HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-    @Mock RequestDispatcher requestDispatcher;
+    @Mock
+    private RequestDispatcher requestDispatcher;
 
-    @Mock LeadSourceRepository leadSourceRepository;
+    @Mock
+    private LeadSourceRepository leadSourceRepository;
 
-    @Before public void setUp() throws IOException {
+    @Before
+    public void setUp() throws IOException {
+
         MockitoAnnotations.initMocks(this);
 
         List<Object[]> leadsByCities = new ArrayList<>();
@@ -50,7 +56,8 @@ public class StatsServletTest {
         when(leadSourceRepository.findLeadsByLeadSource()).thenReturn(resultsbySources);
     }
 
-    @Test public void getMethodToLeadsByClientServlet_ReturnsLeadsGroupedByCity() throws Exception {
+    @Test
+    public void getMethodToLeadsByClientServletReturnsLeadsGroupedByCity() throws Exception {
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintWriter printWriter = new PrintWriter(output);
@@ -62,19 +69,20 @@ public class StatsServletTest {
         printWriter.flush();
         String content = new String(output.toByteArray(), "UTF-8");
 
-        assertEquals(content, "[ {\n" +
-            "  \"label\" : \"FL\",\n" +
-            "  \"value\" : 1\n" +
-            "}, {\n" +
-            "  \"label\" : \"CA\",\n" +
-            "  \"value\" : 1\n" +
-            "}, {\n" +
-            "  \"label\" : \"NY\",\n" +
-            "  \"value\" : 2\n" +
-            "} ]");
+        assertEquals(content, "[ {\n"
+            + "  \"label\" : \"FL\",\n"
+            + "  \"value\" : 1\n"
+            + "}, {\n"
+            + "  \"label\" : \"CA\",\n"
+            + "  \"value\" : 1\n"
+            + "}, {\n"
+            + "  \"label\" : \"NY\",\n"
+            + "  \"value\" : 2\n"
+            + "} ]");
     }
 
-    @Test public void getMethodToLeadsBySourcetServlet_ReturnsLeadsGroupedBySource()
+    @Test
+    public void getMethodToLeadsBySourceServletReturnsLeadsGroupedBySource()
         throws Exception {
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -87,12 +95,12 @@ public class StatsServletTest {
         printWriter.flush();
         String content = new String(output.toByteArray(), "UTF-8");
 
-        assertEquals(content, "[ {\n" +
-            "  \"label\" : \"second\",\n" +
-            "  \"value\" : 2\n" +
-            "}, {\n" +
-            "  \"label\" : \"first\",\n" +
-            "  \"value\" : 2\n" +
-            "} ]");
+        assertEquals(content, "[ {\n"
+            + "  \"label\" : \"second\",\n"
+            + "  \"value\" : 2\n"
+            + "}, {\n"
+            + "  \"label\" : \"first\",\n"
+            + "  \"value\" : 2\n"
+            + "} ]");
     }
 }

@@ -1,6 +1,12 @@
 package com.twilio.calltracking.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "lead_sources")
 public class LeadSource {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,7 +39,8 @@ public class LeadSource {
         this.leads = new ArrayList<>();
     }
 
-    public LeadSource(String name, String incomingNumberNational, String incomingNumberInternational) {
+    public LeadSource(
+            String name, String incomingNumberNational, String incomingNumberInternational) {
         this(incomingNumberNational, incomingNumberInternational);
         this.name = name;
     }
