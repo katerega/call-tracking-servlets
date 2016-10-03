@@ -24,12 +24,12 @@ public class TwilioServices {
 
     public List<Local> searchPhoneNumbers(String areaCode) {
 
-        LocalReader localReader = Local.read("US");
+        LocalReader localReader = Local.reader("US");
         if (areaCode != null) {
-            localReader.byAreaCode(Integer.parseInt(areaCode));
+            localReader.setAreaCode(Integer.parseInt(areaCode));
         }
 
-        Iterator<Local> phoneNumbers = localReader.execute().iterator();
+        Iterator<Local> phoneNumbers = localReader.read().iterator();
 
         List<Local> phoneNumbersAsList = new ArrayList<>();
         phoneNumbers.forEachRemaining(phoneNumbersAsList::add);
@@ -42,7 +42,7 @@ public class TwilioServices {
 
         return new LocalCreator(new PhoneNumber(phoneNumber))
                 .setVoiceApplicationSid(applicationSid)
-                .execute();
+                .create();
     }
 
     public String getApplicationSid() {
@@ -50,16 +50,16 @@ public class TwilioServices {
 
         Application app = apps.iterator().hasNext()
                 ? apps.iterator().next()
-                : Application.create(DEFAULT_APP_NAME).execute();
+                : Application.creator(DEFAULT_APP_NAME).create();
 
         return app.getSid();
     }
 
     private ResourceSet<Application> getApplications() {
         return Application
-                .read()
-                .byFriendlyName(DEFAULT_APP_NAME)
-                .execute();
+                .reader()
+                .setFriendlyName(DEFAULT_APP_NAME)
+                .read();
     }
 }
 
