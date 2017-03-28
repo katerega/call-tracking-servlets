@@ -16,6 +16,12 @@ checkstyle {
     toolVersion = "6.1.1"
 }
 
+gretty {
+    httpPort = 8080
+    contextPath = ''
+    logbackConfigFile = "src/main/resources/logback.xml"
+}
+
 group 'com.twilio.calltracking'
 version '1.0'
 
