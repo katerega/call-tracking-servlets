@@ -5,8 +5,8 @@ import com.twilio.calltracking.models.LeadSource;
 import com.twilio.calltracking.repositories.LeadRepository;
 import com.twilio.calltracking.repositories.LeadSourceRepository;
 import com.twilio.calltracking.servlets.WebAppServlet;
-import com.twilio.twiml.Dial;
-import com.twilio.twiml.Number;
+import com.twilio.twiml.voice.Dial;
+import com.twilio.twiml.voice.Number;
 import com.twilio.twiml.VoiceResponse;
 
 import javax.servlet.ServletException;
